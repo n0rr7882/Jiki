@@ -1,0 +1,23 @@
+{
+    "name": "node-es6-skeleton",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "dev": "nodemon --exec babel-node index.js",
+        "start": "pm2 start --interpreter babel-node index.js"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-plugin-transform-object-rest-spread": "^6.26.0",
+        "babel-preset-env": "^1.6.1"
+    },
+    "dependencies": {
+        "body-parser": "^1.18.2",
+        "cors": "^2.8.4",
+        "express": "^4.16.2",
+        "express-fileupload": "^0.3.0",
+        "mongoose": "^5.0.3",
+        "morgan": "^1.9.0"
+    }
+}
