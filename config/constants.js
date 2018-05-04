@@ -1,5 +1,5 @@
 export default {
     PORT: 3000,
     LOG_FORMAT: 'dev',
-    DB_URL: 'mongodb://localhost/your_database'
+    DB_URL: 'mongodb://localhost/jiki'
 }

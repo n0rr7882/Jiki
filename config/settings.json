@@ -1,4 +1,5 @@
 {
+    "WIKI_TITLE": "테스트위키",
     "FRONT_PAGE": "Front page",
-    "DOCUMENT_BASE_URL": "w"
+    "DOC_BASE_URL": "w"
 }

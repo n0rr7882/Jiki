@@ -6,7 +6,7 @@ const router = Router();
 
 router.use((req, res, next) => {
     // process of 404 Not Found
-    res.redirect(path.join(settings.DOCUMENT_BASE_PATH, settings.FRONT_PAGE));
+    res.redirect('/');
 });
 
 router.use((err, req, res, next) => {

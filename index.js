@@ -7,6 +7,7 @@ import cors from 'cors';
 import path from 'path';
 
 import constants from './config/constants';
+import settings from './config/settings';
 
 import routes from './routes';
 
@@ -29,5 +30,5 @@ app.use(cors());
 app.use(routes);
 
 app.listen(constants.PORT, () => {
-    console.log(`Server listen to port: ${constants.PORT}`);
+    console.log(`"${settings.WIKI_TITLE}" 서버가 ${constants.PORT}번 포트에서 요청을 기다리고 있습니다...`);
 });
