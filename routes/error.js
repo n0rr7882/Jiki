@@ -6,7 +6,9 @@ const router = Router();
 
 router.use((req, res, next) => {
     // process of 404 Not Found
-    res.redirect('/');
+    const err = new Error('Not found');
+    err.status = 404;
+    next(err);
 });
 
 router.use((err, req, res, next) => {
