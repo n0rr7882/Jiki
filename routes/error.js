@@ -1,5 +1,12 @@
 import { Router } from 'express';
 import path from 'path';
+
+import {
+    setContentData,
+    setUserData,
+    setRenderData
+} from '../tools/render-set';
+
 import settings from '../config/settings';
 
 const router = Router();
@@ -12,7 +19,12 @@ router.use((req, res, next) => {
 });
 
 router.use((err, req, res, next) => {
-    res.status(err.status || 500).send({ message: err.message });
+    console.error(err);
+    return res.render('index', setRenderData(
+        settings.BASE_DATA,
+        setUserData(false, null, null),
+        setContentData('에러 발생!', err.message, settings.MENU_LIST.ERROR(), err.stack)
+    ));
 });
 
 export default router;

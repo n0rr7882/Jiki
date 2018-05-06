@@ -18,7 +18,7 @@ const app = express();
 app.disable('x-powered-by');
 
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 
 app.use(logger(constants.LOG_FORMAT));
 app.use(bodyParser.json());
@@ -30,5 +30,5 @@ app.use(cors());
 app.use(routes);
 
 app.listen(constants.PORT, () => {
-    console.log(`"${settings.WIKI_TITLE}" 서버가 ${constants.PORT}번 포트에서 요청을 기다리고 있습니다...`);
+    console.log(`"${settings.BASE_DATA.wikiName}" 서버가 ${constants.PORT}번 포트에서 요청을 기다리고 있습니다...`);
 });

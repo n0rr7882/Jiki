@@ -5,3 +5,12 @@ i.m5 {
 i.m10 {
     margin: 10px;
 }
+
+.textarea {
+    resize: none;
+}
+
+.edit-content {
+    height: 400px;
+    font-family: 'D2Coding', 'Menlo', 'Courier New', Courier, monospace;
+}

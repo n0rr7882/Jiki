@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- bootstrap-->
+    <link rel="stylesheet" href="/css/bulma.min.css" />
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="/js/toggle-menu.js"></script>
+    <title><%= `${contentData.title} - ${baseData.wikiName}` %></title>
+</head>
+
+<body>
+    <nav class="navbar is-white">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <h1 class="title"><%= baseData.wikiName %></h1>
+            </a>
+            <div class="navbar-burger burger" data-target="navMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/recent-changes">
+                    <i class="fas fa-sync m5"></i>
+                    최근 변경
+                </a>
+                <a class="navbar-item" href="/recent-discusses">
+                    <i class="fas fa-comments m5"></i>
+                    최근 토론
+                </a>
+                <a class="navbar-item" href="/random">
+                    <i class="fas fa-random m5"></i>
+                    무작위
+                </a>
+            </div>
+            <div class="navbar-end">
+                <a class="navbar-item" href="/user">
+                    <i class="fas fa-user m5"></i>사용자</a>
+                <a class="navbar-item" href="/setting">
+                    <i class="fas fa-cogs m5"></i>설정</a>
+                <div class="navbar-item">
+                    <form class="field has-addons" action="/search" method="get">
+                        <div class="control is-expanded">
+                            <input class="input is-info" type="text" name="q" placeholder="문서 검색" />
+                        </div>
+                        <div class="control">
+                            <button class="button is-info" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <section class="hero is-info is-bold">
+        <div class="hero-body">
+            <div class="container">
+                <p class="title"><%= contentData.title %></p>
+                <p class="subtitle"><%= contentData.subtitle %></p>
+            </div>
+        </div>
+        <div class="hero-foot">
+            <nav class="tabs is-boxed is-right">
+                <div class="container">
+                    <ul>
+                        <% for(const menu of contentData.menu) { %>
+                            <li>
+                                <a href="<%= menu.href %>"><%= menu.name %></a>
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container content">
+            <%- contentData.content %>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p><%- baseData.license %></p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

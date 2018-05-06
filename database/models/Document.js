@@ -7,6 +7,7 @@ const documentSchema = new Schema({
         user: { type: Types.ObjectId, ref: 'user' },
         ipAddress: { type: String, required: true },
         content: { type: String, required: true },
+        comment: { type: String, required: false },
         createdAt: { type: Date, default: Date.now }
     }],
     accessControlList: [{
@@ -18,6 +19,7 @@ const documentSchema = new Schema({
 
 documentSchema.methods.checkPermission = function (permission, action) {
     let result = true;
+    if (permission === 'owner') return result;
     this.accessControlList.forEach(i => {
         if (
             (i.permission === permission || i.permission === 'all') &&
