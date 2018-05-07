@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import User from '../database/models/User';
 import Document from '../database/models/Document';
+import { IRevision } from '../database/interfaces';
 
 import {
     setBaseData,
@@ -9,6 +10,8 @@ import {
     setUserData,
     setRenderData
 } from '../tools/render-set';
+
+import { handleError } from './error';
 
 import settings from '../config/settings';
 
@@ -21,32 +24,34 @@ router.get('/', (req, res) => {
 router.get('/:title', async (req, res) => {
 
     try {
-        const title = req.params.title;
-        const document = await Document.findOne({ title }).populate('revisions.user');
+
+        const { title } = req.params;
+        const { version } = req.query;
+
+        const document = await Document.findOne({ title }).populate('revisions');
+
         if (!document) {
-            const contentData = {
-                ...setContentData(null, null, settings.MENU_LIST.WIKI(title), null),
-                ...settings.NOT_FOUND_CONTENTS(title)
-            };
             return res.render('index', setRenderData(
                 settings.BASE_DATA,
                 setUserData(false, null, null),
-                contentData
+                settings.NO_DOCUMENT_CONTENTS(title)
             ));
         }
-        const currentRevision = document.revisions[document.revisions.length - 1];
-        const renderData = setRenderData(
-            settings.BASE_DATA,
-            setUserData(false, null, null),
-            setContentData(document.title, '', settings.MENU_LIST.WIKI(title), currentRevision.content)
-        );
-    } catch (err) {
-        console.error(err);
+
+        const revision = document.revisions[(document.revisions.length - version) || 0];
+
+        if (!revision) {
+            return handleError(new Error(), 601, req, res);
+        }
+
         return res.render('index', setRenderData(
             settings.BASE_DATA,
             setUserData(false, null, null),
-            setContentData('에러 발생!', err.message, settings.MENU_LIST.ERROR(), err.stack)
+            settings.WIKI_CONTENTS(title, version, revision.content)
         ));
+
+    } catch (err) {
+        return handleError(err, 999, req, res);
     }
 
 });

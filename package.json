@@ -18,7 +18,9 @@
         "ejs": "^2.6.1",
         "express": "^4.16.2",
         "express-fileupload": "^0.3.0",
+        "jsonwebtoken": "^8.2.1",
         "mongoose": "^5.0.3",
-        "morgan": "^1.9.0"
+        "morgan": "^1.9.0",
+        "request-ip": "^2.0.2"
     }
 }

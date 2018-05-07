@@ -5,7 +5,7 @@ const userSchema = new Schema({
     username: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    permission: { type: String, required: true, default: 'normal' } // ['owner','admin', 'normal', 'none']
+    permission: { type: Number, required: true, default: 1 } // 1: user, 2: admin, 3: owner
 }, { timestamps: true });
 
 function encryptPassword(next) {

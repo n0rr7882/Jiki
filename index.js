@@ -2,12 +2,15 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import fileUpload from 'express-fileupload';
+import requestIp from 'request-ip';
 import cors from 'cors';
 
 import path from 'path';
 
 import constants from './config/constants';
 import settings from './config/settings';
+
+import authentication from './tools/authentication';
 
 import routes from './routes';
 
@@ -24,8 +27,11 @@ app.use(logger(constants.LOG_FORMAT));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(requestIp.mw());
 app.use(fileUpload());
 app.use(cors());
+
+app.use(authentication);
 
 app.use(routes);
 
