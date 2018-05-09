@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import { password } from '../../tools/password';
 const { Types } = Schema;
 
 const userSchema = new Schema({
@@ -30,8 +31,8 @@ userSchema.methods.comparePassword = function (plainPassword) {
     return false;
 };
 
-userSchema.statics.login = function (email, plainPassword) {
-    return this.where('email', email).where('password', password(plainPassword));
+userSchema.statics.login = function (username, plainPassword) {
+    return this.where('username', username).where('password', password(plainPassword));
 }
 
 export default mongoose.model('user', userSchema);

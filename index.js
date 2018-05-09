@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import fileUpload from 'express-fileupload';
 import requestIp from 'request-ip';
@@ -24,6 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger(constants.LOG_FORMAT));
+app.use(cookieParser(constants.COOKIE_SALT, { signed: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));

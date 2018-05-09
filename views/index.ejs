@@ -42,7 +42,11 @@
             </div>
             <div class="navbar-end">
                 <a class="navbar-item" href="/user">
-                    <i class="fas fa-user m5"></i>사용자</a>
+                    <% if (userData) { %>
+                        <i class="fas fa-user m5"></i><%= userData.username %></a>
+                    <% } else { %>
+                        <i class="fas fa-user-times m5"></i>사용자(IP)</a>
+                    <% } %>
                 <a class="navbar-item" href="/setting">
                     <i class="fas fa-cogs m5"></i>설정</a>
                 <div class="navbar-item">

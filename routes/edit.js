@@ -38,12 +38,12 @@ router.get('/:title', async (req, res) => {
 
         return res.render('index', setRenderData(
             settings.BASE_DATA,
-            setUserData(false, null, null),
+            req.user,
             contentData
         ));
 
     } catch (err) {
-        return handleError(err, 999, req, res);
+        return handleError(err, 500, req, res);
     }
 
 });
@@ -72,7 +72,7 @@ router.post('/:title', async (req, res) => {
         return res.redirect(`/w/${title}`);
 
     } catch (err) {
-        return handleError(err, 999, req, res);
+        return handleError(err, 500, req, res);
     }
 
 });

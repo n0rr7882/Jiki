@@ -1,3 +1,10 @@
+const PERMISSION_LIST = {
+    '0': '비로그인',
+    '1': '일반',
+    '2': '관리자',
+    '3': '소유자'
+};
+
 const ERROR_LIST = {
     '100': {
         title: '권한 오류',
@@ -9,7 +16,7 @@ const ERROR_LIST = {
     },
     '102': {
         title: '권한 오류',
-        subtitle: '비 로그인 상태입니다.'
+        subtitle: '비 로그인 상태로 수행할 수 없는 작업입니다..'
     },
     '200': {
         title: '계정 오류',
@@ -20,20 +27,28 @@ const ERROR_LIST = {
         subtitle: '계정을 찾을 수 없습니다.'
     },
     '300': {
-        title: '가입 오류',
+        title: '계정 폼 오류',
         subtitle: '작업을 수행할 수 없습니다.'
     },
     '301': {
-        title: '가입 오류',
+        title: '계정 폼 오류',
         subtitle: '이미 존재하는 계정의 아이디입니다.'
     },
     '302': {
-        title: '가입 오류',
-        subtitle: '20자 미만의 아이디릅 기입해주세요.'
+        title: '계정 폼 오류',
+        subtitle: '20자 미만의 아이디를 기입해주세요.'
     },
     '303': {
-        title: '가입 오류',
+        title: '계정 폼 오류',
+        subtitle: '올바른 이메일을 입력해주세요.'
+    },
+    '304': {
+        title: '계정 폼 오류',
         subtitle: '8~20자 사이의 숫자가 혼합된 암호를 사용해주세요.'
+    },
+    '305': {
+        title: '계정 폼 오류',
+        subtitle: '암호 재확인이 잘못 이루어졌습니다.'
     },
     '400': {
         title: '로그인 오류',
@@ -116,6 +131,9 @@ export default {
         ERROR: () => ([
             { name: '대문으로', href: `/` }
         ]),
+        USER: () => ([
+            { name: '대문으로', href: `/` }
+        ]),
         REGISTER: () => ([
             { name: '사용자', href: `/user` }
         ])
@@ -187,7 +205,7 @@ export default {
                 <div class="field">
                     <label class="label">이메일</label>
                     <div class="control">
-                        <input name="email" type="email" class="input" placeholder="email (option)">
+                        <input name="email" type="email" class="input" placeholder="email">
                     </div>
                 </div>
                 <div class="field">
@@ -218,9 +236,9 @@ export default {
         const content = `
             <form method="POST" action="/login">
                 <div class="field">
-                    <label class="label">이메일</label>
+                    <label class="label">사용자 이름</label>
                     <div class="control">
-                        <input name="email" type="email" class="input" placeholder="Email">
+                        <input name="username" class="input" placeholder="username">
                     </div>
                 </div>
                 <div class="field">
@@ -232,6 +250,65 @@ export default {
                 <div class="field is-grouped is-grouped-right">
                     <div class="control">
                         <button type="submit" class="button is-primary">로그인</button>
+                    </div>
+                </div>
+            </form>
+        `;
+        return { title, subtitle, menu, content };
+    },
+    USER_CONTENTS: function (user, clientIp) {
+        const title = '내 정보';
+        const subtitle = `${user ? user.username : clientIp} (${PERMISSION_LIST[user ? user.permission : 0]})`;
+        const menu = this.MENU_LIST.USER();
+        const content = `
+            <h1>상태</h1>
+            <ul>
+                <li>${user ? 'Username' : 'Client IP'} : <strong>${user ? user.username : clientIp}</strong></li>
+                ${user ? ('<li>Email : <strong>' + user.email + '</strong></li>') : ''}
+                <li>Permission : <strong>${PERMISSION_LIST[user ? user.permission : 0]}</strong></li>
+                ${user ? '<li><a href="/user/edit">계정 수정</a></li>' : ''}
+            </ul>
+            <h1>로그인</h1>
+            <ul>
+                <li><a href="${user ? '/user/logout' : '/login'}">${user ? '로그아웃' : '로그인'}</a></li>
+                <li><a href="/register">회원가입</a></li>
+            </ul>
+            <h1>활동</h1>
+            <ul>
+                <li><a href="/contribution/${user ? 'user/' + user.username : 'nonuser/' + clientIp}/document">내 문서 기여 목록</a></li>
+                <li><a href="/contribution/${user ? 'user/' + user.username : 'nonuser/' + clientIp}/discuss">내 토론 기여 목록</a></li>
+            </ul>
+        `;
+        return { title, subtitle, menu, content };
+    },
+    USER_EDIT_CONTENTS: function (user) {
+        const title = '내 정보 수정';
+        const subtitle = `"${user.username}"의 정보를 업데이트합니다.`;
+        const menu = this.MENU_LIST.USER();
+        const content = `
+            <form method="POST" action="/user/edit">
+                <div class="field">
+                    <label class="label">이메일</label>
+                    <div class="control">
+                        <input name="email" type="email" class="input" placeholder="email">
+                    </div>
+                </div>
+                <hr>
+                <div class="field">
+                    <label class="label">패스워드</label>
+                    <div class="control">
+                        <input name="password" type="password" class="input" placeholder="password">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">재확인</label>
+                    <div class="control">
+                        <input name="confirm" type="password" class="input" placeholder="confirm password">
+                    </div>
+                </div>
+                <div class="field is-grouped is-grouped-right">
+                    <div class="control">
+                        <button type="submit" class="button is-primary">수정</button>
                     </div>
                 </div>
             </form>

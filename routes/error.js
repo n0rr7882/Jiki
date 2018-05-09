@@ -22,11 +22,12 @@ export function handleError(err, code, req, res) {
 router.use((req, res, next) => {
     // process of 404 Not Found
     const err = new Error('Not found');
+    err.code = 990;
     next(err);
 });
 
 router.use((err, req, res, next) => {
-    return handleError(err, 990, res);
+    return handleError(err, err.code || 999, req, res);
 });
 
 export default router;

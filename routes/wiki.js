@@ -33,7 +33,7 @@ router.get('/:title', async (req, res) => {
         if (!document) {
             return res.render('index', setRenderData(
                 settings.BASE_DATA,
-                setUserData(false, null, null),
+                req.user,
                 settings.NO_DOCUMENT_CONTENTS(title)
             ));
         }
@@ -46,7 +46,7 @@ router.get('/:title', async (req, res) => {
 
         return res.render('index', setRenderData(
             settings.BASE_DATA,
-            setUserData(false, null, null),
+            req.user,
             settings.WIKI_CONTENTS(title, version, revision.content)
         ));
 
