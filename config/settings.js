@@ -266,7 +266,7 @@ export default {
                 <li>${user ? 'Username' : 'Client IP'} : <strong>${user ? user.username : clientIp}</strong></li>
                 ${user ? ('<li>Email : <strong>' + user.email + '</strong></li>') : ''}
                 <li>Permission : <strong>${PERMISSION_LIST[user ? user.permission : 0]}</strong></li>
-                ${user ? '<li><a href="/user/edit">계정 수정</a></li>' : ''}
+                ${user ? '<li><a href="/user/edit">정보 수정</a></li>' : ''}
             </ul>
             <h1>로그인</h1>
             <ul>
@@ -312,6 +312,66 @@ export default {
                     </div>
                 </div>
             </form>
+        `;
+        return { title, subtitle, menu, content };
+    },
+    HISTORY_CONTENTS: function (docTitle, document) {
+        const title = `${docTitle} (history)`;
+        const subtitle = `"${docTitle}"문서의 편집 기록을 탐색합니다.`;
+        const menu = this.MENU_LIST.HISTORY(docTitle);
+        const content = `
+            <form>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <div class="select">
+                            <select>
+                                ${document.revisions.map((item, i) => '<option value="' + i + '">v' + (i + 1) + '</option>')}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <div class="select">
+                            <select>
+                                ${document.revisions.map((item, i) => '<option value="' + i + '">v' + (i + 1) + '</option>')}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <button type="submit" class="button is-primary">비교</button>
+                    </div>
+                </div>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>버전</th>
+                        <th>편집자</th>
+                        <th>변경 사유</th>
+                        <th>변경일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${document.revisions.map((item, i, revisions) => (
+                '<tr>' +
+                '<td>' +
+                '<a href="/w/' + document.title + '?version=' + (revisions.length - i) + '">v' + (revisions.length - i) + '</a> ' +
+                '<a href="/raw/' + document.title + '?version=' + (revisions.length - i) + '">(원본)</a> ' +
+                '<a href="/edit/' + document.title + '?version=' + (revisions.length - i) + '">(수정)</a> ' +
+                '</td>' +
+                '<td>' +
+                (item.user ? (
+                    '<a href="/w/user:' + item.user.username + '">' + item.user.username + '</a>'
+                ) : (
+                        '<a href="/contribution/nonuser/' + item.clientIp + '/document">' + item.clientIp + '</a>'
+                    )) +
+                '</td>' +
+                '<td>' + item.comment + '</td>' +
+                '<td>' + item.createdAt + '</td>' +
+                '</tr>'
+            ))
+            }
+                </tbody>
+            </table>
         `;
         return { title, subtitle, menu, content };
     },

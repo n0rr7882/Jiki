@@ -14,7 +14,7 @@ export function handleError(err, code, req, res) {
     console.error(err);
     return res.render('index', setRenderData(
         settings.BASE_DATA,
-        setUserData(false, null, null),
+        req.user,
         settings.ERROR_CONTENTS(err, code)
     ));
 }
