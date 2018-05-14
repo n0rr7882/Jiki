@@ -67,7 +67,12 @@
     <section class="hero is-info is-bold">
         <div class="hero-body">
             <div class="container">
-                <p class="title"><%= contentData.title %></p>
+                <p class="title">
+                    <%= contentData.title %>
+                    <% if(contentData.tag) { %>
+                        <span class="tag is-dark is-medium"><%= contentData.tag %></span>
+                    <% } %>
+                </p>
                 <p class="subtitle"><%= contentData.subtitle %></p>
             </div>
         </div>

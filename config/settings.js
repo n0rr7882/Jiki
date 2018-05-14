@@ -140,9 +140,10 @@ export default {
     },
     WIKI_CONTENTS: function (docTitle, version, content) {
         const title = docTitle;
-        const subtitle = version ? `v${version}문서입니다.` : '최신문서입니다.';
+        const tag = version ? `v${version}` : 'latest';
+        const subtitle = '';
         const menu = this.MENU_LIST.WIKI(docTitle);
-        return { title, subtitle, menu, content };
+        return { title, tag, subtitle, menu, content };
     },
     NO_DOCUMENT_CONTENTS: function (docTitle) {
         const title = docTitle;
@@ -159,7 +160,8 @@ export default {
         return { title, subtitle, menu, content };
     },
     EDIT_CONTENTS: function (docTitle, oldVersion, newVersion, docContent) {
-        const title = `${docTitle} (edit)`;
+        const title = docTitle;
+        const tag = `edit`;
         const subtitle = oldVersion ?
             `문서를 업데이트합니다. v${oldVersion} -> v${newVersion}` :
             `"${docTitle}"문서를 생성합니다.`;
@@ -188,7 +190,7 @@ export default {
                 </div>
             </form>
         `;
-        return { title, subtitle, menu, content };
+        return { title, tag, subtitle, menu, content };
     },
     REGISTER_CONTENTS: function () {
         const title = '회원가입';
@@ -316,7 +318,8 @@ export default {
         return { title, subtitle, menu, content };
     },
     HISTORY_CONTENTS: function (docTitle, document) {
-        const title = `${docTitle} (history)`;
+        const title = docTitle;
+        const tag = `history`;
         const subtitle = `"${docTitle}"문서의 편집 기록을 탐색합니다.`;
         const menu = this.MENU_LIST.HISTORY(docTitle);
         const content = `
@@ -380,16 +383,15 @@ export default {
                 </tbody>
             </table>
         `;
-        return { title, subtitle, menu, content };
+        return { title, tag, subtitle, menu, content };
     },
     DIFF_CONTENTS: function (docTitle, oldV, newV, diffResult) {
-        const title = `${docTitle}(diff) `;
+        const title = docTitle;
+        const tag = `diff`;
         const subtitle = `v${oldV}문서와 v${newV} 문서를 비교합니다.`;
         const menu = this.MENU_LIST.HISTORY(docTitle);
-        const content = `
-    <pre> ${diffResult}</pre>
-        `;
-        return { title, subtitle, menu, content };
+        const content = `<pre> ${diffResult}</pre>`;
+        return { title, tag, subtitle, menu, content };
     },
     ERROR_CONTENTS: function (err, code) {
         const { title, subtitle } = ERROR_LIST[code];
