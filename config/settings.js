@@ -369,12 +369,17 @@ export default {
                     count = '<span class="tag is-dark">' + changes + '</span>';
                 }
 
-                const user = item.user ? '<a href="/w/USER:' + item.user.username + '">' + item.user.username + '</a>' : '<a href="/contribution/nonuser/' + item.clientIp + '/document">' + item.clientIp + '</a>';
+                let user = '';
+                if (item.user) {
+                    user = '<a class="tag is-light" href="/w/USER:' + item.user.username + '">' + item.user.username + '</a><a class="tag is-link" href="/contribution/user/' + item.user.username + '/document">기여 목록</a>';
+                } else {
+                    user = '<a href="/contribution/nonuser/' + item.clientIp + '/document">' + item.clientIp + '</a>';
+                }
 
                 return (
                     '<tr>' +
                     '<td><div class="tags has-addons">' + w + raw + edit + count + '</div></td>' +
-                    '<td>' + user + '</td>' +
+                    '<td><div class="tags has-addons">' + user + '</div></td>' +
                     '<td>' + item.comment + '</td>' +
                     '<td>' + item.createdAt + '</td>' +
                     '</tr>'
