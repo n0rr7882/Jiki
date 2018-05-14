@@ -393,6 +393,14 @@ export default {
         const content = `<pre> ${diffResult}</pre>`;
         return { title, tag, subtitle, menu, content };
     },
+    RAW_CONTENTS: function (docTitle, version, docContent) {
+        const title = docTitle;
+        const tag = version ? `v${version}` : 'latest';
+        const subtitle = `"${docTitle}"문서의 원본 텍스트입니다.`;
+        const menu = this.MENU_LIST.DEFAULT(docTitle);
+        const content = `<pre><code>${docContent}</code></pre>`;
+        return { title, tag, subtitle, menu, content };
+    },
     ERROR_CONTENTS: function (err, code) {
         const { title, subtitle } = ERROR_LIST[code];
         const menu = this.MENU_LIST.ERROR();
