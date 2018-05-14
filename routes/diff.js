@@ -14,7 +14,7 @@ import constants from '../config/constants';
 
 import { handleError } from './error';
 
-import { diffChars, diffLines, convertChangesToXML } from 'diff';
+import { diffChars, diffWords, diffLines, convertChangesToXML } from 'diff';
 
 const router = Router();
 
@@ -37,7 +37,7 @@ router.get('/:title', async (req, res) => {
         const oldContent = document.revisions[document.revisions.length - oldv].content;
         const newContent = document.revisions[document.revisions.length - newv].content;
 
-        const diffChanges = diffLines(oldContent, newContent);
+        const diffChanges = diffWords(oldContent, newContent);
         const diffResult = convertChangesToXML(diffChanges);
 
         return res.render('index', setRenderData(

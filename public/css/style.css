@@ -17,12 +17,12 @@ i.m10 {
 
 pre ins {
     background: #6dfda0;
-    color: #000000;
     text-decoration: none;
+    border-radius: 3px;
 }
 
 pre del {
     background: #ff8a8a;
-    color: #000000;
     text-decoration: none;
+    border-radius: 3px;
 }

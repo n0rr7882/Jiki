@@ -353,7 +353,7 @@ export default {
                 <tbody>
                     ${document.revisions.map((item, i, revisions) => {
                 const w = '<a class="tag is-link" href="/w/' + document.title + '?version=' + (revisions.length - i) + '">v' + (revisions.length - i) + '</a> ';
-                const raw = '<a class="tag is-light" href="/raw/' + document.title + '?version=' + (revisions.length - i) + '">원본</a> ';
+                const raw = '<a class="tag is-info" href="/raw/' + document.title + '?version=' + (revisions.length - i) + '">원본</a> ';
                 const edit = '<a class="tag is-light" href="/edit/' + document.title + '?version=' + (revisions.length - i) + '">수정</a> ';
                 const changes = item.content.length - (revisions[i + 1] ? revisions[i + 1].content.length : 0);
 
