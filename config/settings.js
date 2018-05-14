@@ -395,7 +395,7 @@ export default {
         const tag = `diff`;
         const subtitle = `v${oldV}문서와 v${newV} 문서를 비교합니다.`;
         const menu = this.MENU_LIST.HISTORY(docTitle);
-        const content = `<pre> ${diffResult}</pre>`;
+        const content = `<pre>${diffResult}</pre>`;
         return { title, tag, subtitle, menu, content };
     },
     RAW_CONTENTS: function (docTitle, version, docContent) {

@@ -12,17 +12,22 @@ i.m10 {
 
 .edit-content {
     height: 400px;
+}
+
+pre, code, .edit-content {
     font-family: 'D2Coding', 'Menlo', 'Courier New', Courier, monospace;
 }
 
 pre ins {
-    background: #6dfda0;
+    background: #63f094;;
     text-decoration: none;
     border-radius: 3px;
+    color: #2a2a2a;
 }
 
 pre del {
-    background: #ff8a8a;
+    background: #ff707c;
     text-decoration: none;
     border-radius: 3px;
+    color: #2a2a2a;
 }
