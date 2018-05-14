@@ -351,35 +351,43 @@ export default {
                     </tr>
                 </thead>
                 <tbody>
-                    ${document.revisions.map((item, i, revisions) => (
-                '<tr>' +
-                '<td>' +
-                '<a href="/w/' + document.title + '?version=' + (revisions.length - i) + '">v' + (revisions.length - i) + '</a> ' +
-                '<a href="/raw/' + document.title + '?version=' + (revisions.length - i) + '">(원본)</a> ' +
-                '<a href="/edit/' + document.title + '?version=' + (revisions.length - i) + '">(수정)</a> ' +
-                '</td>' +
-                '<td>' +
-                (item.user ? (
-                    '<a href="/w/USER:' + item.user.username + '">' + item.user.username + '</a>'
-                ) : (
-                        '<a href="/contribution/nonuser/' + item.clientIp + '/document">' + item.clientIp + '</a>'
-                    )) +
-                '</td>' +
-                '<td>' + item.comment + '</td>' +
-                '<td>' + item.createdAt + '</td>' +
-                '</tr>'
-            ))}
+                    ${document.revisions.map((item, i, revisions) => {
+                const w = '<a class="tag is-link" href="/w/' + document.title + '?version=' + (revisions.length - i) + '">v' + (revisions.length - i) + '</a> ';
+                const raw = '<a class="tag is-light" href="/raw/' + document.title + '?version=' + (revisions.length - i) + '">원본</a> ';
+                const edit = '<a class="tag is-light" href="/edit/' + document.title + '?version=' + (revisions.length - i) + '">수정</a> ';
+                const changes = item.content.length - (revisions[i + 1] ? revisions[i + 1].content.length : 0);
+
+                let count = '';
+                if (changes > 0) {
+                    count = '<span class="tag is-success">' + changes + '</span>';
+                } else if (changes < 0) {
+                    count = '<span class="tag is-danger">' + changes + '</span>';
+                } else {
+                    count = '<span class="tag is-dark">' + changes + '</span>';
+                }
+
+                const user = item.user ? '<a href="/w/USER:' + item.user.username + '">' + item.user.username + '</a>' : '<a href="/contribution/nonuser/' + item.clientIp + '/document">' + item.clientIp + '</a>';
+
+                return (
+                    '<tr>' +
+                    '<td><div class="tags has-addons">' + w + raw + edit + count + '</div></td>' +
+                    '<td>' + user + '</td>' +
+                    '<td>' + item.comment + '</td>' +
+                    '<td>' + item.createdAt + '</td>' +
+                    '</tr>'
+                );
+            })}
                 </tbody>
             </table>
         `;
         return { title, subtitle, menu, content };
     },
     DIFF_CONTENTS: function (docTitle, oldV, newV, diffResult) {
-        const title = `${docTitle} (diff)`;
-        const subtitle = `v${oldV}문서와 v${newV}문서를 비교합니다.`;
+        const title = `${docTitle}(diff) `;
+        const subtitle = `v${oldV}문서와 v${newV} 문서를 비교합니다.`;
         const menu = this.MENU_LIST.HISTORY(docTitle);
         const content = `
-            <pre>${diffResult}</pre>
+    <pre> ${diffResult}</pre>
         `;
         return { title, subtitle, menu, content };
     },
