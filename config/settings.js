@@ -1,8 +1,8 @@
 const PERMISSION_LIST = {
-    '0': '비로그인',
-    '1': '일반',
-    '2': '관리자',
-    '3': '소유자'
+    '0': 'nonuser',
+    '1': 'general',
+    '2': 'admin',
+    '3': 'owner'
 };
 
 const ERROR_LIST = {
@@ -320,19 +320,19 @@ export default {
         const subtitle = `"${docTitle}"문서의 편집 기록을 탐색합니다.`;
         const menu = this.MENU_LIST.HISTORY(docTitle);
         const content = `
-            <form>
+            <form action="/diff/${document.title}" method="get">
                 <div class="field is-grouped">
                     <div class="control">
                         <div class="select">
-                            <select>
-                                ${document.revisions.map((item, i) => '<option value="' + i + '">v' + (i + 1) + '</option>')}
+                            <select name="oldv">
+                                ${document.revisions.map((item, i) => '<option value="' + (i + 1) + '">v' + (i + 1) + '</option>')}
                             </select>
                         </div>
                     </div>
                     <div class="control">
                         <div class="select">
-                            <select>
-                                ${document.revisions.map((item, i) => '<option value="' + i + '">v' + (i + 1) + '</option>')}
+                            <select name="newv">
+                                ${document.revisions.map((item, i) => '<option value="' + (i + 1) + '">v' + (i + 1) + '</option>')}
                             </select>
                         </div>
                     </div>
@@ -360,7 +360,7 @@ export default {
                 '</td>' +
                 '<td>' +
                 (item.user ? (
-                    '<a href="/w/user:' + item.user.username + '">' + item.user.username + '</a>'
+                    '<a href="/w/USER:' + item.user.username + '">' + item.user.username + '</a>'
                 ) : (
                         '<a href="/contribution/nonuser/' + item.clientIp + '/document">' + item.clientIp + '</a>'
                     )) +
@@ -368,10 +368,18 @@ export default {
                 '<td>' + item.comment + '</td>' +
                 '<td>' + item.createdAt + '</td>' +
                 '</tr>'
-            ))
-            }
+            ))}
                 </tbody>
             </table>
+        `;
+        return { title, subtitle, menu, content };
+    },
+    DIFF_CONTENTS: function (docTitle, oldV, newV, diffResult) {
+        const title = `${docTitle} (diff)`;
+        const subtitle = `v${oldV}문서와 v${newV}문서를 비교합니다.`;
+        const menu = this.MENU_LIST.HISTORY(docTitle);
+        const content = `
+            <pre>${diffResult}</pre>
         `;
         return { title, subtitle, menu, content };
     },

@@ -61,7 +61,7 @@ router.post('/:title', async (req, res) => {
         }
 
         const revision = new IRevision({
-            user: req.user || undefined,
+            user: req.user || null,
             clientIp,
             content,
             comment

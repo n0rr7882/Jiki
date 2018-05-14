@@ -14,3 +14,15 @@ i.m10 {
     height: 400px;
     font-family: 'D2Coding', 'Menlo', 'Courier New', Courier, monospace;
 }
+
+pre ins {
+    background: #6dfda0;
+    color: #000000;
+    text-decoration: none;
+}
+
+pre del {
+    background: #ff8a8a;
+    color: #000000;
+    text-decoration: none;
+}
